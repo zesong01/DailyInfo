@@ -1884,8 +1884,7 @@ export default function App() {
             </div>
             <div className="settings-body">
               <p>
-                新闻和研究材料计划每 30 分钟采集，GitHub
-                调度可能延迟。行情刷新不代表交易所实时授权数据。
+                {snapshot?.automationEnabled ? "新闻和研究材料计划每 30 分钟采集，GitHub 调度可能延迟。" : "当前展示已发布快照，自动采集状态以 GitHub Actions 最近运行为准。"}行情刷新不代表交易所实时授权数据。
               </p>
               {snapshot?.sources.map((s) => (
                 <div className="source-status" key={s.name}>

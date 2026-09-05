@@ -2,7 +2,7 @@
 
 面向 AI 工程师兼投资者的中文情报工作台。覆盖美股、A 股、港股、ETF、AI 新闻、论文及开源项目。电脑与手机可用，时间统一显示为北京时间。
 
-当前发布状态：网站已通过 `gh-pages` 分支上线。浏览器报价刷新可用；自动采集工作流已写好，当前 GitHub 凭据缺少 `workflow` 权限，尚未启用。工作流源码保存在 `deployment/publish.yml`，授权后移入 `.github/workflows/publish.yml` 并切换 Pages 为 GitHub Actions。
+当前发布状态：已启用 GitHub Pages 与 GitHub Actions 自动更新。浏览器报价刷新独立于定时新闻采集。自动摘要需配置个人 AI 服务密钥。
 
 ## 已实现
 
@@ -12,7 +12,7 @@
 - 论文 / Repo、原始链接、来源状态、主题材料分布；不把热度声称为已验证趋势。
 - OpenAI 兼容 AI 研究侧栏：引用材料、持续追问、取消请求、错误反馈。
 - 收藏、主题关注、明暗主题。个人偏好仅保存在当前设备，不跨设备同步。
-- GitHub Pages 发布；已准备 GitHub Actions 自动采集与部署工作流，授权启用后每小时第 17、47 分钟运行，调度可能延迟。
+- GitHub Pages + Actions：代码推送自动部署，每小时第 17、47 分钟计划采集，调度可能延迟。
 
 ## 本地运行
 
@@ -63,7 +63,7 @@ GitHub Pages 是公开静态托管。若需要多设备私密研究同步、密�
 
 ## GitHub 部署
 
-当前使用 `gh-pages` 分支部署。获得 `workflow` 权限后，将 `deployment/publish.yml` 复制到 `.github/workflows/publish.yml`，并将仓库 Pages 的 Build and deployment 选择为 GitHub Actions；工作流会运行测试、采集、构建并发布。只部署 `dist/`，不会把源代码、配置文件或 Secrets 当成网站内容。
+仓库 Pages 的 Build and deployment 使用 GitHub Actions；工作流 `.github/workflows/publish.yml` 会运行测试、采集、构建并发布。只部署 `dist/`，不会把源代码、配置文件或 Secrets 当成网站内容。
 
 公共仓库的计划任务可能因长期无活动而停用；请检查 Actions 状态。页面底部和来源状态面板会保留真实快照时间，避免静默过期。
 
