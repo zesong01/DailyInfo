@@ -480,9 +480,25 @@ export default function App() {
           ai: a.ai,
         })),
         instrument,
-        quote: instrument && quotes[instrument.symbol] ? { ...quotes[instrument.symbol], time: quoteTimeBjt(quotes[instrument.symbol].time, instrument.market), timezone: "Asia/Shanghai" } : undefined,
+        quote:
+          instrument && quotes[instrument.symbol]
+            ? {
+                ...quotes[instrument.symbol],
+                time: quoteTimeBjt(
+                  quotes[instrument.symbol].time,
+                  instrument.market,
+                ),
+                timezone: "Asia/Shanghai",
+              }
+            : undefined,
         priceStats: instrument
-          ? performance(snapshot?.history[instrument.symbol] || [])
+          ? {
+              ...performance(snapshot?.history[instrument.symbol] || []),
+              from: snapshot?.history[instrument.symbol]?.[0]?.date,
+              to: snapshot?.history[instrument.symbol]?.at(-1)?.date,
+              currency: instrument.currency,
+              basis: "前复权价格；非含分红总回报；未做汇率换算",
+            }
           : undefined,
       };
       const answer = await askAI(
@@ -545,7 +561,7 @@ export default function App() {
             {a.summary || "打开来源阅读完整内容。"}
           </p>
         )}
-        {a.ai && budget === 15 && (
+        {a.ai && budget >= 10 && (
           <div className="why">
             <Sparkles size={14} />
             <span>
@@ -1602,6 +1618,11 @@ export default function App() {
                         <Sparkles size={13} />
                         AI 分析 · 推断
                       </div>
+                      <p className="data-note">
+                        {selectedArticle.ai.model} ·{" "}
+                        {formatBjt(selectedArticle.ai.generatedAt)} ·
+                        仅基于所列材料
+                      </p>
                       {(
                         [
                           ["why", "为什么重要"],
