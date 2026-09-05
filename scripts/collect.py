@@ -246,7 +246,7 @@ def main():
             if points:history[symbol]=points
     statuses.append({'name':'腾讯财经日线','url':'https://gu.qq.com/','ok':bool(history),'checkedAt':STAMP,'count':len(history)})
     ai_status=enrich(articles)
-    snapshot={'version':1,'generatedAt':STAMP,'articles':articles,'instruments':instruments,'quotes':quotes,'history':history,'sources':statuses,'aiStatus':ai_status}
+    snapshot={'version':1,'automationEnabled':os.getenv('GITHUB_ACTIONS')=='true','generatedAt':STAMP,'articles':articles,'instruments':instruments,'quotes':quotes,'history':history,'sources':statuses,'aiStatus':ai_status}
     OUT.parent.mkdir(parents=True,exist_ok=True)
     tmp=OUT.with_suffix('.tmp');tmp.write_text(json.dumps(snapshot,ensure_ascii=False,separators=(',',':')));tmp.replace(OUT)
     print(f'Collected {len(articles)} articles, {len(quotes)} quotes, {len(history)} price series. Sources: '+', '.join(s['name']+(' OK' if s['ok'] else ' unavailable') for s in statuses))

@@ -66,6 +66,7 @@ export interface SourceStatus {
   error?: string;
 }
 export interface Snapshot {
+  automationEnabled?: boolean;
   version: number;
   generatedAt: string;
   articles: Article[];
